@@ -14,7 +14,3 @@ dist/
 coverage/
 public/
 node_modules/
-
-# 환경설정 파일
-*.config.js
-*.config.mjs
