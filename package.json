@@ -10,7 +10,9 @@
     "lint:fix": "next lint --fix",
     "type-check": "tsc --noEmit",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "ci": "bun run type-check && bun run lint && bun run format:check && bun run build",
+    "ci:fix": "bun run lint:fix && bun run format && bun run type-check"
   },
   "dependencies": {
     "react": "19.1.0",
@@ -29,6 +31,7 @@
     "eslint-config-next": "15.4.6",
     "eslint-config-prettier": "^10.1.8",
     "prettier": "^3.4.2",
-    "typescript": "^5"
+    "typescript": "^5",
+    "wait-on": "^8.0.4"
   }
 }
