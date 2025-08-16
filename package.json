@@ -21,7 +21,6 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
-    "@lhci/cli": "^0.15.1",
     "@radix-ui/themes": "^3.2.1",
     "@types/node": "^20",
     "@types/react": "^19",
