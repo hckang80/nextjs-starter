@@ -1,10 +1,13 @@
 'use client';
 
 import { createClient } from '@/utils/supabase/client';
-import { Button, Card, Grid, Text } from '@radix-ui/themes';
+import { Button, Card, Flex, Grid, Text } from '@radix-ui/themes';
+import type { User } from '@supabase/supabase-js';
+import { useEffect, useState } from 'react';
 import styles from './page.module.css';
 
 export default function LoginContainer() {
+  const [user, setUser] = useState<User | null>(null);
   const supabase = createClient();
 
   const handleGoogleLogin = async () => {
@@ -16,6 +19,36 @@ export default function LoginContainer() {
     });
     if (error) {
       console.error('Google OAuth login error:', error);
+    }
+  };
+
+  useEffect(() => {
+    const checkUser = async () => {
+      const {
+        data: { user }
+      } = await supabase.auth.getUser();
+      setUser(user);
+    };
+    checkUser();
+
+    const {
+      data: { subscription }
+    } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log('Auth state changed:', event);
+      setUser(session?.user ?? null);
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [supabase.auth]);
+
+  const handleLogout = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.error('Logout error:', error);
+    } else {
+      console.info('You have been logged out.');
     }
   };
 
@@ -38,6 +71,14 @@ export default function LoginContainer() {
         >
           Google
         </Button>
+
+        {!!user && (
+          <Flex justify='center'>
+            <Button onClick={handleLogout} size='3' variant='outline' className={styles.button}>
+              LOGOUT
+            </Button>
+          </Flex>
+        )}
       </Card>
     </Grid>
   );
