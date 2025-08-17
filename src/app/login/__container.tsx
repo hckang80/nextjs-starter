@@ -1,7 +1,7 @@
 'use client';
 
 import { createClient } from '@/utils/supabase/client';
-import { Button, Card, Flex, Grid, Text } from '@radix-ui/themes';
+import { Button, Card, Grid, Text } from '@radix-ui/themes';
 import type { User } from '@supabase/supabase-js';
 import { useEffect, useState } from 'react';
 import styles from './page.module.css';
@@ -62,23 +62,23 @@ export default function LoginContainer() {
           This demo uses Google for authentication.
         </Text>
 
-        <Button
-          onClick={handleGoogleLogin}
-          mt='5'
-          color='tomato'
-          size='3'
-          className={styles.button}
-        >
-          Google
-        </Button>
+        <Grid gap='2'>
+          <Button
+            onClick={handleGoogleLogin}
+            mt='5'
+            color='tomato'
+            size='3'
+            className={styles.button}
+          >
+            Google
+          </Button>
 
-        {!!user && (
-          <Flex justify='center'>
+          {!!user && (
             <Button onClick={handleLogout} size='3' variant='outline' className={styles.button}>
-              LOGOUT
+              Logout
             </Button>
-          </Flex>
-        )}
+          )}
+        </Grid>
       </Card>
     </Grid>
   );
